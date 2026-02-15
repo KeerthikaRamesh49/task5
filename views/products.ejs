@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Management System</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Product Management</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/buyers">Buyers</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="actions">
+            <a href="/products/add" class="btn">Add New Product</a>
+        </div>
+
+        <div class="table-container">
+            <h2>Product List</h2>
+            <% if (products.length === 0) { %>
+                <p>No products found. <a href="/products/add">Add your first product</a></p>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach(product => { %>
+                            <tr>
+                                <td><%= product.id %></td>
+                                <td><%= product.name %></td>
+                                <td><%= product.category %></td>
+                                <td>$<%= product.price.toFixed(2) %></td>
+                                <td><%= product.quantity %></td>
+                                <td><%= product.description || 'N/A' %></td>
+                                <td>
+                                    <form method="POST" action="/products/delete/<%= product.id %>" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this product?')">
+                                        <button type="submit" class="btn-delete">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
+    </main>
+</body>
+</html>

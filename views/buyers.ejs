@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyers - Management System</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Buyer Management</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/products">Products</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="actions">
+            <a href="/buyers/add" class="btn">Add New Buyer</a>
+        </div>
+
+        <div class="table-container">
+            <h2>Buyer List</h2>
+            <% if (buyers.length === 0) { %>
+                <p>No buyers found. <a href="/buyers/add">Add your first buyer</a></p>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% buyers.forEach(buyer => { %>
+                            <tr>
+                                <td><%= buyer.id %></td>
+                                <td><%= buyer.name %></td>
+                                <td><%= buyer.email %></td>
+                                <td><%= buyer.phone %></td>
+                                <td><%= buyer.address || 'N/A' %></td>
+                                <td>
+                                    <form method="POST" action="/buyers/delete/<%= buyer.id %>" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this buyer?')">
+                                        <button type="submit" class="btn-delete">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
+    </main>
+</body>
+</html>
